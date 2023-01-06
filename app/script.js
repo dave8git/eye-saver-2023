@@ -74,8 +74,8 @@ const App = () => {
           {formatTime()}
         </div>
         )}
-        { status === 'off' && (<button className="btn" onClick={startTimer()}>Start</button>)}
-        { status !== 'off' && (<button className="btn" onClick={stopTimer()}>Stop</button>)}
+        { status === 'off' && (<button className="btn" onClick={() => {startTimer()}}>Start</button>)}
+        { status !== 'off' && (<button className="btn" onClick={() => {stopTimer()}}>Stop</button>)}
         <button className="btn btn-close" onClick={() => {closeApp()}}>X</button>
       </div >
     )
