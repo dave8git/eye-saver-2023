@@ -27,7 +27,7 @@ const App = () => {
 
   const startTimer = () => {
     if(!timer) {
-      setTimer(() => setInterval(() => {step()}, 1000)),
+      setTimer(() => setInterval(() => {step(time)}, 1000)),
       setTime(1200),
       console.log(time);
       setStatus('work')
