@@ -1,12 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { useState } from 'react';
 
 const App = () => {
-  state = {
-    status: 'off', 
-    time: 0,
-    timer: null
-  }
+  // state = {
+  //   status: 'off', 
+  //   time: 0,
+  //   timer: null
+  // }
+  const [status, setStatus] = useState('off');
+  const [time, setTime] = useState(0);
+  const [timer, setTimer] = useState(null);
+
   const formatTime = () => {
     let minutes = 0; 
     let seconds = 0;
@@ -24,37 +29,29 @@ const App = () => {
   }
 
   const startTimer = () => {
-    setState({
-      timer: setInterval(() => {step()}, 1000),
-      time: 12, 
-      status: 'work',
-    })
+      setTimer(() => setInterval(() => {step()}, 1000)),
+      setTime(12), 
+      setStatus('work')
   }
 
   const stopTimer = () => {
-    clearInterval(state.timer);
-    this.setState({
-      time: 0,
-      status: 'off',
-    });
+    clearInterval(setTimer(timer));
+    
+      setTime(0),
+      setStatus('off'),
+ 
   }
 
   const step = () => {
-    if(state.time != 0) {
-      setState({
-        time: state.time - 1,
-      });
+    if(time != 0) {
+        setTime(time - 1)
     } else {
-      if(state.status === 'rest') {
-        setState({
-          status: 'work',
-          time: 1200,
-        });
+      if(status === 'rest') {
+          setStatus('work'),
+          setTime(1200)
       } else {
-        setState({
-          state: 'rest',
-          time: 20,
-        });
+        setStatus('rest'),
+        setTime(20)
       }
     }
   }
