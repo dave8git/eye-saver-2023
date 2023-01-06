@@ -28,20 +28,21 @@ const App = () => {
   const startTimer = () => {
     if(!timer) {
       setTimer(() => setInterval(() => {step()}, 1000)),
-      //setTime(12),
+      setTime(1200),
       console.log(time);
       setStatus('work')
     } 
   };
 
   const stopTimer = () => {
-    clearInterval(timer);
+    clearInterval();
     setStatus('off'),
     setTime(0);
   }
 
   const step = () => {
-    if(time != 0) {
+    console.log('time', time);
+    if(time !== 0) {
         setTime((time) => time - 1)
     } else {
       if(status === 'rest') {
