@@ -16,8 +16,8 @@ const App = () => {
     let minutes = 0; 
     let seconds = 0;
 
-    minutes = Math.floor(state.time/60);
-    seconds = state.time = (minutes*60);
+    minutes = Math.floor(time/60);
+    seconds = (minutes*60);
 
     if(minutes < 10) {
       minutes = `0${minutes}`;
@@ -38,7 +38,7 @@ const App = () => {
     clearInterval(setTimer(timer));
     
       setTime(0),
-      setStatus('off'),
+      setStatus('off')
  
   }
 
@@ -62,20 +62,20 @@ const App = () => {
   return(
       <div>
         <h1>Protect your eyes</h1>
-        { state.status === 'off' && (
+        { status === 'off' && (
           <div>
             <p>According to optometrists in order to save your eyes, you should follow the 20/20/20. It means you should to rest your eyes every 20 minutes for 20 seconds by looking more than 20 feet away.</p>
             <p>This app will help you track your time and inform you when it's time to rest.</p>
           </div>
         )}
-        { state.status === 'work' && (<img src="./images/work.png" />) }
-        { state.status === 'rest' && (<img src="./images/rest.png" />) }
-        { state.status === 'off' && (<div className="timer">
+        { status === 'work' && (<img src="./images/work.png" />) }
+        { status === 'rest' && (<img src="./images/rest.png" />) }
+        { status === 'off' && (<div className="timer">
           {formatTime()}
         </div>
         )}
-        { state.status === 'off' && (<button className="btn" onClick={startTimer()}>Start</button>)}
-        { state.status !== 'off' && (<button className="btn" onClick={stopTimer()}>Stop</button>)}
+        { status === 'off' && (<button className="btn" onClick={startTimer()}>Start</button>)}
+        { status !== 'off' && (<button className="btn" onClick={stopTimer()}>Stop</button>)}
         <button className="btn btn-close" onClick={() => {closeApp()}}>X</button>
       </div >
     )
