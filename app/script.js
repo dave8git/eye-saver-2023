@@ -15,36 +15,34 @@ const App = () => {
   const formatTime = () => {
     let minutes = 0; 
     let seconds = 0;
+    console.log(time);
+    minutes = Math.floor((time / (1000 * 60)) % 60),
+    seconds = Math.floor((time / 1000) % 60)
 
-    minutes = Math.floor(time/60);
-    seconds = (minutes*60);
+    const minutesTime = (minutes < 10) ? "0" + minutes : minutes;
+    const secondsTime = (seconds < 10) ? "0" + seconds : seconds; 
 
-    if(minutes < 10) {
-      minutes = `0${minutes}`;
-    }
-    if(seconds < 10) {
-      seconds = `0${minutes}`;
-    }
-    return `${minutes}:${seconds}`;
+        return minutesTime + ":" + secondsTime;
   }
 
   const startTimer = () => {
+    if(!timer) {
       setTimer(() => setInterval(() => {step()}, 1000)),
-      setTime(12), 
+      //setTime(12),
+      console.log(time);
       setStatus('work')
-  }
+    } 
+  };
 
   const stopTimer = () => {
-    clearInterval(setTimer(timer));
-    
-      setTime(0),
-      setStatus('off')
- 
+    clearInterval(timer);
+    setStatus('off'),
+    setTime(0);
   }
 
   const step = () => {
     if(time != 0) {
-        setTime(time - 1)
+        setTime((time) => time - 1)
     } else {
       if(status === 'rest') {
           setStatus('work'),
@@ -70,7 +68,7 @@ const App = () => {
         )}
         { status === 'work' && (<img src="./images/work.png" />) }
         { status === 'rest' && (<img src="./images/rest.png" />) }
-        { status === 'off' && (<div className="timer">
+        { status !== 'off' && (<div className="timer">
           {formatTime()}
         </div>
         )}
