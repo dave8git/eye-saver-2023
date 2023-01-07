@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const App = () => {
   // state = {
@@ -13,11 +13,8 @@ const App = () => {
   const [timer, setTimer] = useState(null);
 
   const formatTime = () => {
-    let minutes = 0; 
-    let seconds = 0;
-    console.log(time);
-    minutes = Math.floor((time / (1000 * 60)) % 60),
-    seconds = Math.floor((time / 1000) % 60)
+    let minutes = minutes = Math.floor(time / 60); 
+    let seconds = time % 60;
 
     const minutesTime = (minutes < 10) ? "0" + minutes : minutes;
     const secondsTime = (seconds < 10) ? "0" + seconds : seconds; 
@@ -27,33 +24,30 @@ const App = () => {
 
   const startTimer = () => {
     if(!timer) {
-      setTimer(() => setInterval(() => {step(time)}, 1000)),
-      setTime(1200),
-      console.log(time);
-      setStatus('work')
+      setStatus('work');
+      setTime(1200);
+      setTimer(() => setInterval(() => setTime(time => time - 1), 1000));
     } 
   };
 
   const stopTimer = () => {
-    clearInterval();
-    setStatus('off'),
+    clearInterval(timer);
+    setTimer(null);
+    setStatus('off');
     setTime(0);
   }
 
-  const step = () => {
-    console.log('time', time);
-    if(time !== 0) {
-        setTime((time) => time - 1)
+ useEffect(() => {
+  if (timer && time === 0) {
+    if (status === 'rest') {
+      setStatus('work'), 
+      setTime(21)
     } else {
-      if(status === 'rest') {
-          setStatus('work'),
-          setTime(1200)
-      } else {
-        setStatus('rest'),
-        setTime(20)
-      }
+      setStatus('rest'),
+      setTime(19)
     }
   }
+ }, [timer, time])
 
   const closeApp = () => {
     window.close();
