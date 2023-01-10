@@ -10,10 +10,10 @@ const App = () => {
   // }
   const [status, setStatus] = useState('off');
   const [time, setTime] = useState(0);
-  const [timer, setTimer] = useState(null);
+  const [timer, setTimer] = useState(null); // zabezpieczenie przed kliknięciem guzika start dwa razy (jeżeli działa nie uruchomi się ponownie)
 
   const formatTime = () => {
-    let minutes = minutes = Math.floor(time / 60); 
+    let minutes = Math.floor(time / 60); 
     let seconds = time % 60;
 
     const minutesTime = (minutes < 10) ? "0" + minutes : minutes;
@@ -26,8 +26,8 @@ const App = () => {
     if(!timer) {
       setStatus('work');
       setTime(1200);
-      setTimer(() => setInterval(() => setTime(time => time - 1), 1000));
-    } 
+      setTimer(() => setInterval(() => setTime(time => time - 1), 1000)); // setInterval przy pierwszym uruchomieniu dostaje nr. identyfikacyjny, i ma ten numer przez cały czas aż do wykonania clearInterval(). Ten nr. identyfikacyjny jest zapisywany w zmiennej timer. 
+    }  // setTime --> zmieniamy zmienną time która jest w pamięci (czyli zmienną time ze stanu lokalnego). Gdybyśmy wzięli po prostu zmienną time, byłaby to wartość z momentu uruchomienia setInterval. 
   };
 
   const stopTimer = () => {
@@ -37,14 +37,20 @@ const App = () => {
     setTime(0);
   }
 
+  const playBell = () => {
+    const bell = new Audio('./sounds/bell.wav');
+    bell.play();
+  };
+
  useEffect(() => {
-  if (timer && time === 0) {
+  if (timer && time === 0) { // timer zmienia się przy start/stop, time co sekundę jeżeli timer jest uruchomiony, [timer jest null, a time 0 - taki przypadek jest np. przed uruchomieniem aplikacji]
+    playBell();
     if (status === 'rest') {
-      setStatus('work'), 
-      setTime(21)
+      setStatus('work'); 
+      setTime(1200)
     } else {
-      setStatus('rest'),
-      setTime(19)
+      setStatus('rest');
+      setTime(20)
     }
   }
  }, [timer, time])
